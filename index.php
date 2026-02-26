@@ -854,7 +854,7 @@ function sendCorsHeaders(): void
         header('Vary: Origin');
     }
 
-    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
+    header('Access-Control-Allow-Origin: ' . $origin);
     header('Access-Control-Allow-Headers: Content-Type');
     header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
     if ($allowCredentials) {
@@ -879,7 +879,7 @@ function prime_is_allowed_cors_origin(string $origin): bool
     $allowed[] = 'http://0.0.0.0:3000';
     $allowed[] = 'http://127.0.0.1:5173';
     $allowed[] = 'http://localhost:5173';
-    $allowed[] = 'http://0.0.0.0:5173';
+    $allowed[] = 'https://iprime.christembassy-ism.org';
 
     return in_array($origin, array_values(array_unique(array_filter($allowed))), true);
 }
