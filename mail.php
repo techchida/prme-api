@@ -25,7 +25,7 @@ function prime_send_registration_confirmation_email(array $registration): bool
         (string)($registration['minister_name'] ?? '')
     ));
 
-    $subject = 'PRIME Registration Received - Next Steps & Training Resources';
+    $subject = 'PRIME Registration Received - Prepare While Awaiting Activation';
     $frontendUrl = $cfg['frontend_url'] !== '' ? $cfg['frontend_url'] : '#';
     $trainingUrl = $cfg['training_url'] !== ''
         ? $cfg['training_url']
@@ -34,6 +34,7 @@ function prime_send_registration_confirmation_email(array $registration): bool
                 ? $cfg['resources_url']
                 : ($cfg['frontend_url'] !== '' ? ($cfg['frontend_url'] . '#training') : '#')
         );
+    $logoUrl = 'https://i.imgur.com/z7s3eQs.png';
 
     $safeName = htmlspecialchars($displayName !== '' ? $displayName : 'Minister', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $safeCategory = htmlspecialchars((string)($registration['category'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -58,6 +59,9 @@ function prime_send_registration_confirmation_email(array $registration): bool
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:680px;margin:0 auto;">
       <tr>
         <td style="padding:0 0 18px 0;text-align:center;">
+          <div style="margin-bottom:14px;">
+            <img src="{$logoUrl}" alt="PRIME Logo" width="160" style="max-width:160px;height:auto;display:inline-block;opacity:0.95;" />
+          </div>
           <div style="display:inline-block;padding:8px 14px;border-radius:999px;background:#f59e0b1a;border:1px solid #f59e0b40;color:#fbbf24;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
             PRIME Conference Registration
           </div>
@@ -69,9 +73,9 @@ function prime_send_registration_confirmation_email(array $registration): bool
             <div style="font-size:28px;line-height:1.2;font-weight:800;color:#ffffff;margin:0 0 8px;">
               Registration Received
             </div>
-            <div style="font-size:15px;line-height:1.6;color:#cbd5e1;">
-              Thank you, {$safeName}. Your request to host a PRIME conference has been received successfully.
-            </div>
+              <div style="font-size:15px;line-height:1.6;color:#cbd5e1;">
+              Thank you, {$safeName}. Your request to host a PRIME conference has been received successfully and is now in review.
+              </div>
           </div>
 
           <div style="padding:24px 28px 10px;">
@@ -95,22 +99,22 @@ function prime_send_registration_confirmation_email(array $registration): bool
             <div style="padding:18px;border-radius:16px;background:linear-gradient(135deg,#0ea5e91a,#f59e0b14);border:1px solid #38bdf826;">
               <div style="font-size:15px;font-weight:700;color:#ffffff;margin:0 0 8px;">What happens next?</div>
               <div style="font-size:14px;line-height:1.6;color:#cbd5e1;">
-                A PRIME coordinator will review your submission and contact you with next steps, guidance, and planning support.
+                A PRIME coordinator will review your submission and contact you with activation updates, next steps, and planning support for your PRIME conference.
               </div>
             </div>
           </div>
 
           <div style="padding:18px 28px 8px;">
             <div style="padding:20px;border-radius:16px;background:#f59e0b12;border:1px solid #f59e0b33;">
-              <div style="font-size:16px;font-weight:800;color:#fbbf24;margin:0 0 8px;">Prepare early in the Training Section</div>
+              <div style="font-size:16px;font-weight:800;color:#fbbf24;margin:0 0 8px;">Explore Resources While Awaiting Activation</div>
               <div style="font-size:14px;line-height:1.6;color:#e5e7eb;margin:0 0 14px;">
-                While your registration is being reviewed, visit the Training section in the PRIME frontend to access materials, guides, and media that can help you plan effectively.
+                While awaiting the activation of your PRIME conference, visit the Training section on the website to explore ministry resources, planning guides, and media content that will help you prepare your team effectively.
               </div>
               <a href="{$trainingUrl}" style="display:inline-block;padding:12px 18px;border-radius:12px;background:#f59e0b;color:#111827;text-decoration:none;font-weight:800;font-size:13px;letter-spacing:.04em;">
-                Open Training Section
+                Explore Training Resources
               </a>
               <div style="font-size:12px;line-height:1.5;color:#cbd5e1;margin-top:10px;">
-                This link opens the frontend Training tab directly when hash links are supported.
+                Start preparing now while the PRIME team processes your conference activation.
               </div>
             </div>
           </div>
@@ -135,9 +139,9 @@ HTML;
 
     $text = "PRIME Registration Received\n\n"
         . "Dear " . ($displayName !== '' ? $displayName : 'Minister') . ",\n\n"
-        . "Your PRIME conference registration has been received successfully.\n"
-        . "A PRIME coordinator will contact you with next steps.\n\n"
-        . "Resources:\n"
+        . "Your PRIME conference registration has been received successfully and is now in review.\n"
+        . "A PRIME coordinator will contact you with activation updates and next steps.\n\n"
+        . "While awaiting activation, explore resources in the Training section:\n"
         . ($trainingUrl !== '#' ? $trainingUrl : 'Visit the PRIME portal and open the Training section.') . "\n\n"
         . "PRIME Global Impact Team\n";
 
