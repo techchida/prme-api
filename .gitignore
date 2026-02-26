@@ -1,0 +1,16 @@
+.env
+.env.local
+
+# Runtime uploads / proofs
+uploads/
+
+# Legacy local JSON data (not used in MySQL mode)
+data/
+
+# PHP logs / temp
+*.log
+
+# OS/editor noise
+.DS_Store
+.idea/
+.vscode/
