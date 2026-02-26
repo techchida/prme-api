@@ -119,7 +119,7 @@ function route(PDO $pdo, string $method, string $path): void
             respond(['success' => false, 'message' => $e->getMessage()], 422);
         } catch (Throwable $e) {
             error_log('[prime-api] Stripe checkout session failed: ' . $e->getMessage());
-            respond(['success' => false, 'message' => 'Unable to initialize Stripe checkout.'.$e->getMessage()], 500);
+            respond(['success' => false, 'message' => 'Unable to initialize Stripe checkout.'], 500);
         }
     }
 
