@@ -34,7 +34,7 @@ function prime_send_registration_confirmation_email(array $registration): bool
                 ? $cfg['resources_url']
                 : ($cfg['frontend_url'] !== '' ? ($cfg['frontend_url'] . '#training') : '#')
         );
-    $logoUrl = 'https://i.imgur.com/z7s3eQs.png';
+    $logoUrl = $cfg['frontend_url'] !== '' ? ($cfg['frontend_url'] . '/logo.png') : '';
 
     $safeName = htmlspecialchars($displayName !== '' ? $displayName : 'Minister', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $safeCategory = htmlspecialchars((string)($registration['category'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -45,6 +45,9 @@ function prime_send_registration_confirmation_email(array $registration): bool
         (string)($registration['state'] ?? ''),
         (string)($registration['country'] ?? '')
     ), ', '), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $logoMarkup = $logoUrl !== ''
+        ? '<div style="margin-bottom:14px;"><img src="' . htmlspecialchars($logoUrl, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="ISM Word Alive Conference Logo" width="160" style="max-width:160px;height:auto;display:inline-block;opacity:0.95;" /></div>'
+        : '';
 
     $html = <<<HTML
 <!DOCTYPE html>
@@ -59,9 +62,7 @@ function prime_send_registration_confirmation_email(array $registration): bool
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:680px;margin:0 auto;">
       <tr>
         <td style="padding:0 0 18px 0;text-align:center;">
-          <div style="margin-bottom:14px;">
-            <img src="{$logoUrl}" alt="PRIME Logo" width="160" style="max-width:160px;height:auto;display:inline-block;opacity:0.95;" />
-          </div>
+          {$logoMarkup}
           <div style="display:inline-block;padding:8px 14px;border-radius:999px;background:#f59e0b1a;border:1px solid #f59e0b40;color:#fbbf24;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
             PRIME Conference Registration
           </div>
